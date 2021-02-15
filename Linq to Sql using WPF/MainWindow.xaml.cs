@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,16 @@ namespace Linq_to_Sql_using_WPF
         public MainWindow()
         {
             InitializeComponent();
+            //Add configuration references
+            string connectionString = ConfigurationManager
+                .ConnectionStrings["LinqtoSqlusingWPF.Properties.Settings.UniversityManagementConnectionString"]
+                .ConnectionString;
+
+        }
+
+        private void MainDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
