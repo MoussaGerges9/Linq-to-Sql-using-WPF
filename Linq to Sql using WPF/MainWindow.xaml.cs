@@ -21,14 +21,15 @@ namespace Linq_to_Sql_using_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private LinqToSqlDataClassDataContext dataContext;
         public MainWindow()
         {
             InitializeComponent();
-            //Add configuration references
+            //Add configuration references + Linq to SQL class
             string connectionString = ConfigurationManager
                 .ConnectionStrings["LinqtoSqlusingWPF.Properties.Settings.UniversityManagementConnectionString"]
                 .ConnectionString;
-
+            dataContext = new LinqToSqlDataClassDataContext(connectionString);
         }
 
         private void MainDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
