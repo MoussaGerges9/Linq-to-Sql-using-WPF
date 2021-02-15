@@ -31,10 +31,5 @@ namespace Linq_to_Sql_using_WPF
                 .ConnectionString;
             dataContext = new LinqToSqlDataClassDataContext(connectionString);
         }
-
-        private void MainDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }
