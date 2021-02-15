@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linq to Sql using WPF", "Linq to Sql using WPF\Linq to Sql using WPF.csproj", "{2DC34061-DEAD-449A-B54C-B4ECFD675808}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2DC34061-DEAD-449A-B54C-B4ECFD675808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DC34061-DEAD-449A-B54C-B4ECFD675808}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DC34061-DEAD-449A-B54C-B4ECFD675808}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DC34061-DEAD-449A-B54C-B4ECFD675808}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {969A3CD4-05B3-4E96-A955-543F1CF580D3}
+	EndGlobalSection
+EndGlobal
