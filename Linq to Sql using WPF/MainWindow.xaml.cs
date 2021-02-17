@@ -26,10 +26,21 @@ namespace Linq_to_Sql_using_WPF
         {
             InitializeComponent();
             //Add configuration references + Linq to SQL class
-            string connectionString = ConfigurationManager
-                .ConnectionStrings["LinqtoSqlusingWPF.Properties.Settings.UniversityManagementConnectionString"]
-                .ConnectionString;
+            string connectionString =
+                @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\UniversityManagement.mdf;Integrated Security=True";
             dataContext = new LinqToSqlDataClassDataContext(connectionString);
+            AddUniversity();
+        }
+
+        public void AddUniversity()
+        {
+            University university = new University();
+            university.Name = "Politecnico";
+            dataContext.Universities.InsertOnSubmit(university);
+            dataContext.Universities.InsertOnSubmit(new University(){Name = "Oxford"});
+            dataContext.SubmitChanges();
+
+            MainDataGrid.ItemsSource = dataContext.Universities;
         }
     }
 }

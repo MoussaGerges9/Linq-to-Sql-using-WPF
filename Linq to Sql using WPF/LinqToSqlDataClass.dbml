@@ -1,1 +1,9 @@
-﻿
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="UniversityManagement" Class="LinqToSqlDataClassDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\UniversityManagement.mdf;Integrated Security=True" SettingsObjectName="Linq_to_Sql_using_WPF.Properties.Settings" SettingsPropertyName="UniversityManagementConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.University" Member="Universities">
+    <Type Name="University">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsReadOnly="true" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>
