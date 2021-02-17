@@ -30,17 +30,30 @@ namespace Linq_to_Sql_using_WPF
                 @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\UniversityManagement.mdf;Integrated Security=True";
             dataContext = new LinqToSqlDataClassDataContext(connectionString);
             AddUniversity();
+            AddStudent();
         }
 
         public void AddUniversity()
         {
-            University university = new University();
-            university.Name = "Politecnico";
-            dataContext.Universities.InsertOnSubmit(university);
+            dataContext.Universities.InsertOnSubmit(new University() { Name = "Politecnico" });
             dataContext.Universities.InsertOnSubmit(new University(){Name = "Oxford"});
+            dataContext.Universities.InsertOnSubmit(new University(){Name = "Stanford" });
             dataContext.SubmitChanges();
 
-            MainDataGrid.ItemsSource = dataContext.Universities;
+            //MainDataGrid.ItemsSource = dataContext.Universities;
+        }
+
+        public void AddStudent()
+        {
+            var universities = dataContext.Universities.ToList();
+            List<Student> students = new List<Student>();
+            students.Add(new Student(){Name = "Mina",Gender = "Male",UniversityId = universities[0].Id});
+            students.Add(new Student(){Name = "Sara",Gender = "Female",University = universities[1]});
+            students.Add(new Student(){Name = "Luca",Gender = "Male",University = universities[2]});
+
+            dataContext.Students.InsertAllOnSubmit(students);
+            dataContext.SubmitChanges();
+            MainDataGrid.ItemsSource = dataContext.Students;
         }
     }
 }
