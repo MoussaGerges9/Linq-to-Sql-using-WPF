@@ -76,8 +76,12 @@ namespace Linq_to_Sql_using_WPF
             dataContext.StudentLectures.InsertOnSubmit(new StudentLecture() { StudentId = students[1].Id, LectureId = lectures[1].Id });
             dataContext.StudentLectures.InsertOnSubmit(new StudentLecture() { StudentId = students[2].Id, LectureId = lectures[2].Id });
 
+            var allDataStudents = from studLec in dataContext.StudentLectures
+                select new { studLec.Student.Name, LectureName = studLec.Lecture.Name, studLec.Student.Gender,
+                    UniversityName = studLec.Student.University.Name };
+
             dataContext.SubmitChanges();
-            MainDataGrid.ItemsSource = dataContext.StudentLectures;
+            MainDataGrid.ItemsSource = allDataStudents;
         }
     }
 }
