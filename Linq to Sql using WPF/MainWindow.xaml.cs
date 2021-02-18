@@ -29,16 +29,17 @@ namespace Linq_to_Sql_using_WPF
             string connectionString =
                 @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\UniversityManagement.mdf;Integrated Security=True";
             dataContext = new LinqToSqlDataClassDataContext(connectionString);
-            //AddUniversity();
-            //AddStudent();
+            AddUniversity();
+            AddStudent();
             AddLecture();
+            AddStudentLectures();
         }
 
         public void AddUniversity()
         {
-            dataContext.Universities.InsertOnSubmit(new University() { Name = "Politecnico"});
-            dataContext.Universities.InsertOnSubmit(new University(){Name = "Oxford"});
-            dataContext.Universities.InsertOnSubmit(new University(){Name = "Stanford" });
+            dataContext.Universities.InsertOnSubmit(new University() { Name = "Politecnico" });
+            dataContext.Universities.InsertOnSubmit(new University() { Name = "Oxford" });
+            dataContext.Universities.InsertOnSubmit(new University() { Name = "Stanford" });
             dataContext.SubmitChanges();
             //MainDataGrid.ItemsSource = dataContext.Universities;
         }
@@ -47,9 +48,9 @@ namespace Linq_to_Sql_using_WPF
         {
             var universities = dataContext.Universities.ToList();
             List<Student> students = new List<Student>();
-            students.Add(new Student(){Name = "Mina",Gender = "Male",UniversityId = universities[0].Id});
-            students.Add(new Student(){Name = "Sara",Gender = "Female",University = universities[1]});
-            students.Add(new Student(){Name = "Luca",Gender = "Male",University = universities[2]});
+            students.Add(new Student() { Name = "Mina", Gender = "Male", UniversityId = universities[0].Id });
+            students.Add(new Student() { Name = "Sara", Gender = "Female", University = universities[1] });
+            students.Add(new Student() { Name = "Luca", Gender = "Male", University = universities[2] });
 
             dataContext.Students.InsertAllOnSubmit(students);
             dataContext.SubmitChanges();
@@ -64,7 +65,19 @@ namespace Linq_to_Sql_using_WPF
             dataContext.Lectures.InsertOnSubmit(new Lecture() { Name = "Arabic" });
 
             dataContext.SubmitChanges();
-            MainDataGrid.ItemsSource = dataContext.Lectures;
+            //MainDataGrid.ItemsSource = dataContext.Lectures;
+        }
+
+        public void AddStudentLectures()
+        {
+            var students = dataContext.Students.ToList();
+            var lectures = dataContext.Lectures.ToList();
+            dataContext.StudentLectures.InsertOnSubmit(new StudentLecture() { StudentId = students[0].Id, LectureId = lectures[0].Id });
+            dataContext.StudentLectures.InsertOnSubmit(new StudentLecture() { StudentId = students[1].Id, LectureId = lectures[1].Id });
+            dataContext.StudentLectures.InsertOnSubmit(new StudentLecture() { StudentId = students[2].Id, LectureId = lectures[2].Id });
+
+            dataContext.SubmitChanges();
+            MainDataGrid.ItemsSource = dataContext.StudentLectures;
         }
     }
 }
