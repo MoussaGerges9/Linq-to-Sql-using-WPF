@@ -29,17 +29,17 @@ namespace Linq_to_Sql_using_WPF
             string connectionString =
                 @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\UniversityManagement.mdf;Integrated Security=True";
             dataContext = new LinqToSqlDataClassDataContext(connectionString);
-            AddUniversity();
-            AddStudent();
+            //AddUniversity();
+            //AddStudent();
+            AddLecture();
         }
 
         public void AddUniversity()
         {
-            dataContext.Universities.InsertOnSubmit(new University() { Name = "Politecnico" });
+            dataContext.Universities.InsertOnSubmit(new University() { Name = "Politecnico"});
             dataContext.Universities.InsertOnSubmit(new University(){Name = "Oxford"});
             dataContext.Universities.InsertOnSubmit(new University(){Name = "Stanford" });
             dataContext.SubmitChanges();
-
             //MainDataGrid.ItemsSource = dataContext.Universities;
         }
 
@@ -54,6 +54,17 @@ namespace Linq_to_Sql_using_WPF
             dataContext.Students.InsertAllOnSubmit(students);
             dataContext.SubmitChanges();
             MainDataGrid.ItemsSource = dataContext.Students;
+        }
+
+        public void AddLecture()
+        {
+            dataContext.Lectures.InsertOnSubmit(new Lecture() { Name = "Math" });
+            dataContext.Lectures.InsertOnSubmit(new Lecture() { Name = "English" });
+            dataContext.Lectures.InsertOnSubmit(new Lecture() { Name = "Physics" });
+            dataContext.Lectures.InsertOnSubmit(new Lecture() { Name = "Arabic" });
+
+            dataContext.SubmitChanges();
+            MainDataGrid.ItemsSource = dataContext.Lectures;
         }
     }
 }
