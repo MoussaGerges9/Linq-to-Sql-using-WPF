@@ -29,12 +29,7 @@ namespace Linq_to_Sql_using_WPF
             string connectionString =
                 @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\UniversityManagement.mdf;Integrated Security=True";
             dataContext = new LinqToSqlDataClassDataContext(connectionString);
-            AddUniversity();
-            AddStudent();
-            AddLecture();
-            AddStudentLectures();
-            GetUniversitiesWithFemale();
-            GetLecturesFromPolitecnico();
+            CallFunctions();
         }
 
         public void AddUniversity()
@@ -43,7 +38,6 @@ namespace Linq_to_Sql_using_WPF
             dataContext.Universities.InsertOnSubmit(new University() { Name = "Oxford" });
             dataContext.Universities.InsertOnSubmit(new University() { Name = "Stanford" });
             dataContext.SubmitChanges();
-            //MainDataGrid.ItemsSource = dataContext.Universities;
         }
 
         public void AddStudent()
@@ -57,7 +51,6 @@ namespace Linq_to_Sql_using_WPF
 
             dataContext.Students.InsertAllOnSubmit(students);
             dataContext.SubmitChanges();
-            MainDataGrid.ItemsSource = dataContext.Students;
         }
 
         public void AddLecture()
@@ -68,7 +61,6 @@ namespace Linq_to_Sql_using_WPF
             dataContext.Lectures.InsertOnSubmit(new Lecture() { Name = "Arabic" });
 
             dataContext.SubmitChanges();
-            //MainDataGrid.ItemsSource = dataContext.Lectures;
         }
 
         public void AddStudentLectures()
@@ -81,29 +73,31 @@ namespace Linq_to_Sql_using_WPF
             dataContext.StudentLectures.InsertOnSubmit(new StudentLecture() { StudentId = students[3].Id, LectureId = lectures[3].Id });
 
             var allDataStudents = from studLec in dataContext.StudentLectures
-                select new { studLec.Student.Name, LectureName = studLec.Lecture.Name, studLec.Student.Gender,
-                    UniversityName = studLec.Student.University.Name };
+                                  select new
+                                  {
+                                      studLec.Student.Name,
+                                      LectureName = studLec.Lecture.Name,
+                                      studLec.Student.Gender,
+                                      UniversityName = studLec.Student.University.Name
+                                  };
 
             dataContext.SubmitChanges();
-            //MainDataGrid.ItemsSource = allDataStudents;
+            MainDataGrid.ItemsSource = allDataStudents;
         }
 
         public void GetUniversitiesWithFemale()
         {
             var universities = from student in dataContext.Students
-                where student.Gender == "Female"
-                select student.University;
-          
+                               where student.Gender == "Female"
+                               select student.University;
         }
 
         public void GetLecturesFromPolitecnico()
         {
             var lectures = from studentLecture in dataContext.StudentLectures
-                join student  in dataContext.Students on studentLecture.StudentId equals student.Id
-                where student.University.Name == "Politecnico"
-                select studentLecture.Lecture;
-
-            MainDataGrid.ItemsSource = lectures;
+                           join student in dataContext.Students on studentLecture.StudentId equals student.Id
+                           where student.University.Name == "Politecnico"
+                           select studentLecture.Lecture;
         }
 
         public void UpdateLecture()
@@ -118,6 +112,14 @@ namespace Linq_to_Sql_using_WPF
             Lecture lecture = dataContext.Lectures.FirstOrDefault(l => l.Name == "Math");
             dataContext.Lectures.DeleteOnSubmit(lecture);
             dataContext.SubmitChanges();
+        }
+
+        public void CallFunctions()
+        {
+            AddUniversity();
+            AddStudent();
+            AddLecture();
+            AddStudentLectures();
         }
     }
 }
