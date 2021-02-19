@@ -34,6 +34,7 @@ namespace Linq_to_Sql_using_WPF
             AddLecture();
             AddStudentLectures();
             GetUniversitiesWithFemale();
+            GetLecturesFromPolitecnico();
         }
 
         public void AddUniversity()
@@ -51,7 +52,7 @@ namespace Linq_to_Sql_using_WPF
             List<Student> students = new List<Student>();
             students.Add(new Student() { Name = "Mina", Gender = "Male", UniversityId = universities[0].Id });
             students.Add(new Student() { Name = "Sara", Gender = "Female", University = universities[1] });
-            students.Add(new Student() { Name = "Nicol", Gender = "Female", University = universities[2] });
+            students.Add(new Student() { Name = "Nicol", Gender = "Female", University = universities[0] });
             students.Add(new Student() { Name = "Luca", Gender = "Male", University = universities[2] });
 
             dataContext.Students.InsertAllOnSubmit(students);
@@ -77,6 +78,7 @@ namespace Linq_to_Sql_using_WPF
             dataContext.StudentLectures.InsertOnSubmit(new StudentLecture() { StudentId = students[0].Id, LectureId = lectures[0].Id });
             dataContext.StudentLectures.InsertOnSubmit(new StudentLecture() { StudentId = students[1].Id, LectureId = lectures[1].Id });
             dataContext.StudentLectures.InsertOnSubmit(new StudentLecture() { StudentId = students[2].Id, LectureId = lectures[2].Id });
+            dataContext.StudentLectures.InsertOnSubmit(new StudentLecture() { StudentId = students[3].Id, LectureId = lectures[3].Id });
 
             var allDataStudents = from studLec in dataContext.StudentLectures
                 select new { studLec.Student.Name, LectureName = studLec.Lecture.Name, studLec.Student.Gender,
@@ -91,8 +93,15 @@ namespace Linq_to_Sql_using_WPF
             var universities = from student in dataContext.Students
                 where student.Gender == "Female"
                 select student.University;
-            MainDataGrid.ItemsSource = universities;
+          
+        }
 
+        public void GetLecturesFromPolitecnico()
+        {
+            var lectures = from studentLecture in dataContext.StudentLectures
+                where studentLecture.Student.University.Name == "Politecnico"
+                select studentLecture.Lecture;
+            MainDataGrid.ItemsSource = lectures;
         }
     }
 }
