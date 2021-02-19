@@ -99,8 +99,10 @@ namespace Linq_to_Sql_using_WPF
         public void GetLecturesFromPolitecnico()
         {
             var lectures = from studentLecture in dataContext.StudentLectures
-                where studentLecture.Student.University.Name == "Politecnico"
+                join student  in dataContext.Students on studentLecture.StudentId equals student.Id
+                where student.University.Name == "Politecnico"
                 select studentLecture.Lecture;
+
             MainDataGrid.ItemsSource = lectures;
         }
     }
