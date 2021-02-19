@@ -105,5 +105,19 @@ namespace Linq_to_Sql_using_WPF
 
             MainDataGrid.ItemsSource = lectures;
         }
+
+        public void UpdateLecture()
+        {
+            Lecture lecture = dataContext.Lectures.FirstOrDefault(l => l.Name == "Arabic");
+            lecture.Name = "Italian";
+            dataContext.SubmitChanges();
+        }
+
+        public void DeleteLecture()
+        {
+            Lecture lecture = dataContext.Lectures.FirstOrDefault(l => l.Name == "Math");
+            dataContext.Lectures.DeleteOnSubmit(lecture);
+            dataContext.SubmitChanges();
+        }
     }
 }
