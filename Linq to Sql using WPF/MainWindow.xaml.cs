@@ -33,6 +33,7 @@ namespace Linq_to_Sql_using_WPF
             AddStudent();
             AddLecture();
             AddStudentLectures();
+            GetUniversitiesWithFemale();
         }
 
         public void AddUniversity()
@@ -50,6 +51,7 @@ namespace Linq_to_Sql_using_WPF
             List<Student> students = new List<Student>();
             students.Add(new Student() { Name = "Mina", Gender = "Male", UniversityId = universities[0].Id });
             students.Add(new Student() { Name = "Sara", Gender = "Female", University = universities[1] });
+            students.Add(new Student() { Name = "Nicol", Gender = "Female", University = universities[2] });
             students.Add(new Student() { Name = "Luca", Gender = "Male", University = universities[2] });
 
             dataContext.Students.InsertAllOnSubmit(students);
@@ -81,7 +83,16 @@ namespace Linq_to_Sql_using_WPF
                     UniversityName = studLec.Student.University.Name };
 
             dataContext.SubmitChanges();
-            MainDataGrid.ItemsSource = allDataStudents;
+            //MainDataGrid.ItemsSource = allDataStudents;
+        }
+
+        public void GetUniversitiesWithFemale()
+        {
+            var universities = from student in dataContext.Students
+                where student.Gender == "Female"
+                select student.University;
+            MainDataGrid.ItemsSource = universities;
+
         }
     }
 }
